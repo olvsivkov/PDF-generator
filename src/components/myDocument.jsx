@@ -1,17 +1,8 @@
 import React, { useState } from 'react';
+import PDFfile from './pdfFile';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-
-function Component({ name, includeName }) {
-  return (
-    <div id="pdf-content">
-      <h1>PDF Content</h1>
-      <p>Name: {name}</p>
-      {includeName && <p>Include Name: Yes</p>}
-      {!includeName && <p></p>}
-    </div>
-  );
-}
+import InputForm from './inputForm';
 
 function GetPDFfile() {
   const [name, setName] = useState('');
@@ -46,30 +37,13 @@ function GetPDFfile() {
 
   return (
     <div>
-      <form>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Include Name:
-          <input
-            type="checkbox"
-            checked={includeName}
-            onChange={() => setIncludeName(!includeName)}
-          />
-        </label>
-        <br />
-        <button type="button" onClick={generatePDF}>
-          Generate PDF
-        </button>
-      </form>
-      <Component name={name} includeName={includeName} />
+      <InputForm setName={setName} setIncludeName={setIncludeName} name={name} includeName={includeName}/>
+
+      <button type="button" onClick={generatePDF}>
+        Generate PDF
+      </button>
+     
+      <PDFfile name={name} includeName={includeName}/>
     </div>
   );
 }
