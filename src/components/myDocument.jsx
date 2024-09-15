@@ -3,10 +3,12 @@ import PDFfile from './pdfFile';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import InputForm from './inputForm';
+import GetRegions from './getRegion';
 
 function GetPDFfile() {
   const [name, setName] = useState('');
   const [includeName, setIncludeName] = useState(false);
+  const [activeRegion, setActiveRegion] = useState(false)
 
   const generatePDF = () => {
     const input = document.getElementById('pdf-content');
@@ -37,13 +39,26 @@ function GetPDFfile() {
 
   return (
     <div>
-      <InputForm setName={setName} setIncludeName={setIncludeName} name={name} includeName={includeName}/>
+      <GetRegions
+        setActiveRegion={setActiveRegion}
+      /> 
+      {activeRegion ? <InputForm 
+        setName={setName} 
+        setIncludeName={setIncludeName} 
+        name={name} 
+        includeName={includeName}
+      /> : false}
 
-      <button type="button" onClick={generatePDF}>
+      <button type="button" 
+        onClick={generatePDF}
+      >
         Generate PDF
       </button>
      
-      <PDFfile name={name} includeName={includeName}/>
+      <PDFfile 
+        name={name} 
+        includeName={includeName}
+      />
     </div>
   );
 }
