@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PDFfile from './pdfFile';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -11,9 +11,11 @@ function GetPDFfile() {
   const [name, setName] = useState(''); // Имя клиента
   const [includeName, setIncludeName] = useState(false); // чекбокс с ЭР
   const [activeRegion, setActiveRegion] = useState(false) // Клик по региону после которого появляется форма
-  const [dataBaseJSON, setdataBaseJSON] = useState(json) // Клик по региону после которого появляется форма
+  const [dataBaseJSON, setdataBaseJSON] = useState(json) // загружаем в стейт данные из базы данных и передаем в GetRegions
+  const [chooseRegionIndex, setChooseRegionIndex] = useState(0) // по клику на регион передается индекс региона в базе данных
+  const [PDFfileInfo, setPDFfileInfo] = useState(json.items[chooseRegionIndex].region) // передается информация об активном регионе
 
-  console.log(dataBaseJSON)
+  useEffect(() => { setPDFfileInfo(json.items[chooseRegionIndex].region) }, [chooseRegionIndex]); // при клике на регионы передается изменившийся индекс региона и далее передается в <PDFfile/>
 
   const generatePDF = () => { // генерация и скачивание пдф файла
     const input = document.getElementById('pdf-content');
@@ -46,6 +48,8 @@ function GetPDFfile() {
     <div>
       <GetRegions
         setActiveRegion={setActiveRegion}
+        dataBaseJSON={dataBaseJSON}
+        setChooseRegionIndex={setChooseRegionIndex}
       /> 
       {activeRegion ? <InputForm setName={setName} setIncludeName={setIncludeName} name={name} includeName={includeName}/> : false}
 
@@ -58,6 +62,7 @@ function GetPDFfile() {
       <PDFfile 
         name={name} 
         includeName={includeName}
+        PDFfileInfo={PDFfileInfo}
       />
     </div>
   );

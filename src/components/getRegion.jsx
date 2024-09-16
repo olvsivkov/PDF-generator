@@ -1,7 +1,5 @@
 import React from 'react';
 
-const arrayOfRegion = ['Санкт-Петербург', 'Калининград', 'Псков', 'Лен область', 'Псков', 'Карелия', 'Архангельск', 'Мурманск', 'Вологда',];
-
 function Region({ region, onClick }) {
     // выводится имя региона
     return (
@@ -11,18 +9,19 @@ function Region({ region, onClick }) {
     );
 }
 
-function GetRegions({setActiveRegion, dataBaseJSON}) { // компонент который выводит массив регионов
+function GetRegions({setActiveRegion, dataBaseJSON, setChooseRegionIndex}) { // компонент который выводит массив регионов
 
-    const handleRegionClick = () => { // клик по которому форма становится видимой
+    const handleRegionClick = (index) => { // клик по которому форма становится видимой
         setActiveRegion(true);
+        setChooseRegionIndex(index)
     };
-    const arrayOfRegion2 = dataBaseJSON
-    console.log(arrayOfRegion2)
-    const regions = arrayOfRegion.map((region, index) => ( 
+    const arrayOfRegion = dataBaseJSON.items
+  
+    const regions = arrayOfRegion.map((item, index) => ( 
         <Region 
-            region={region} 
+            region={item.region} 
             key={index} 
-            onClick={handleRegionClick}
+            onClick={() => handleRegionClick(index)}
         />
     ));
 
