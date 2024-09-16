@@ -4,13 +4,18 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import InputForm from './inputForm';
 import GetRegions from './getRegion';
+import json from "../db/dataBase.json" 
+
 
 function GetPDFfile() {
-  const [name, setName] = useState('');
-  const [includeName, setIncludeName] = useState(false);
-  const [activeRegion, setActiveRegion] = useState(false)
+  const [name, setName] = useState(''); // Имя клиента
+  const [includeName, setIncludeName] = useState(false); // чекбокс с ЭР
+  const [activeRegion, setActiveRegion] = useState(false) // Клик по региону после которого появляется форма
+  const [dataBaseJSON, setdataBaseJSON] = useState(json) // Клик по региону после которого появляется форма
 
-  const generatePDF = () => {
+  console.log(dataBaseJSON)
+
+  const generatePDF = () => { // генерация и скачивание пдф файла
     const input = document.getElementById('pdf-content');
 
     html2canvas(input).then((canvas) => {
@@ -42,12 +47,7 @@ function GetPDFfile() {
       <GetRegions
         setActiveRegion={setActiveRegion}
       /> 
-      {activeRegion ? <InputForm 
-        setName={setName} 
-        setIncludeName={setIncludeName} 
-        name={name} 
-        includeName={includeName}
-      /> : false}
+      {activeRegion ? <InputForm setName={setName} setIncludeName={setIncludeName} name={name} includeName={includeName}/> : false}
 
       <button type="button" 
         onClick={generatePDF}

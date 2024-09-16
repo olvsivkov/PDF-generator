@@ -11,12 +11,13 @@ function Region({ region, onClick }) {
     );
 }
 
-function GetRegions({setActiveRegion}) { // компонент который выводит массив регионов
+function GetRegions({setActiveRegion, dataBaseJSON}) { // компонент который выводит массив регионов
 
     const handleRegionClick = () => { // клик по которому форма становится видимой
         setActiveRegion(true);
     };
-
+    const arrayOfRegion2 = dataBaseJSON
+    console.log(arrayOfRegion2)
     const regions = arrayOfRegion.map((region, index) => ( 
         <Region 
             region={region} 
