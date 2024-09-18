@@ -6,12 +6,14 @@ import InputForm from './inputForm';
 import GetRegions from './getRegion';
 import json from "../db/dataBase.json" 
 
+import '../styles/styles.css'
+
 
 function GetPDFfile() {
   const [name, setName] = useState(''); // Имя клиента
   const [includeName, setIncludeName] = useState(false); // чекбокс с ЭР
   const [activeRegion, setActiveRegion] = useState(false) // Клик по региону после которого появляется форма
-  const [dataBaseJSON, setdataBaseJSON] = useState(json) // загружаем в стейт данные из базы данных и передаем в GetRegions
+  const [dataBaseJSON, setDataBaseJSON] = useState(json) // загружаем в стейт данные из базы данных и передаем в GetRegions
   const [chooseRegionIndex, setChooseRegionIndex] = useState(0) // по клику на регион передается индекс региона в базе данных
   const [PDFfileInfo, setPDFfileInfo] = useState(json.items[chooseRegionIndex].region) // передается информация об активном регионе
 
